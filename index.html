@@ -1,0 +1,1219 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>O.N.P.M. — Office National de Protection des Murs</title>
+<style>
+  :root{
+    --paper: #F3EFE6;
+    --paper-dark: #E8E1D2;
+    --ink: #2C2C2C;
+    --forest: #1B3A2B;
+    --forest-light: #2C5240;
+    --alert: #8B2E2E;
+    --gold: #B8964F;
+    --line: rgba(44,44,44,0.18);
+  }
+
+  *{ box-sizing:border-box; margin:0; padding:0; }
+
+  @font-face{
+    font-family:'fallback-serif';
+    src:local('Georgia');
+  }
+
+  body{
+    background:var(--paper);
+    background-image:
+      radial-gradient(circle at 20% 10%, rgba(184,150,79,0.06), transparent 40%),
+      radial-gradient(circle at 80% 80%, rgba(27,58,43,0.05), transparent 40%);
+    color:var(--ink);
+    font-family: Georgia, 'Times New Roman', serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .mono{
+    font-family:'Courier New', Courier, monospace;
+    letter-spacing:0.02em;
+  }
+
+  .sans{
+    font-family:Helvetica, Arial, sans-serif;
+  }
+
+  /* ===== HEADER / LETTERHEAD ===== */
+  header.letterhead{
+    border-bottom:3px solid var(--forest);
+    padding:28px 24px 18px;
+    max-width:920px;
+    margin:0 auto;
+  }
+  .letterhead-top{
+    display:flex;
+    align-items:flex-start;
+    gap:20px;
+    justify-content:space-between;
+    flex-wrap:wrap;
+  }
+  .republic-line{
+    font-family:'Courier New', monospace;
+    font-size:11px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    color:var(--forest);
+    margin-bottom:6px;
+  }
+  .agency-name{
+    font-size:clamp(22px, 4vw, 32px);
+    font-weight:bold;
+    color:var(--forest);
+    line-height:1.15;
+  }
+  .agency-sub{
+    font-size:13px;
+    font-style:italic;
+    color:#555;
+    margin-top:4px;
+  }
+  .ref-block{
+    font-family:'Courier New', monospace;
+    font-size:11px;
+    text-align:right;
+    color:#555;
+    line-height:1.8;
+    white-space:nowrap;
+  }
+
+  /* ===== SEAL ===== */
+  .seal-wrap{
+    display:flex;
+    justify-content:center;
+    margin:18px 0 6px;
+  }
+  .seal{
+    width:108px;
+    height:108px;
+    border-radius:50%;
+    border:3px double var(--gold);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    color:var(--alert);
+    font-family:'Courier New', monospace;
+    font-size:9px;
+    font-weight:bold;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    transform: rotate(-8deg) scale(2.2);
+    opacity:0;
+    animation: stamp 0.55s 0.3s cubic-bezier(.2,1.6,.4,1) forwards;
+    background:
+      repeating-radial-gradient(circle, transparent 0 2px, rgba(139,46,46,0.03) 2px 4px);
+    position:relative;
+  }
+  .seal::before{
+    content:'';
+    position:absolute;
+    inset:8px;
+    border:1px solid var(--alert);
+    border-radius:50%;
+  }
+  .seal span{ padding:0 14px; }
+
+  @keyframes stamp{
+    0%{ opacity:0; transform: rotate(-8deg) scale(2.4); }
+    60%{ opacity:1; }
+    100%{ opacity:1; transform: rotate(-8deg) scale(1); }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .seal{ animation:none; opacity:1; transform:rotate(-8deg) scale(1); }
+  }
+
+  /* ===== MAIN ===== */
+  main{
+    max-width:920px;
+    margin:0 auto;
+    padding:10px 24px 60px;
+  }
+
+  .bulletin{
+    margin-top:42px;
+  }
+  .bulletin-tag{
+    display:inline-block;
+    font-family:'Courier New', monospace;
+    font-size:11px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:#fff;
+    background:var(--forest);
+    padding:3px 10px;
+    margin-bottom:14px;
+  }
+  .bulletin h2{
+    font-size:clamp(20px, 3vw, 27px);
+    color:var(--ink);
+    border-bottom:1px solid var(--line);
+    padding-bottom:10px;
+    margin-bottom:16px;
+  }
+  .bulletin p{
+    font-size:16.5px;
+    color:#2c2c2c;
+    margin-bottom:12px;
+  }
+  .bulletin p strong{ color:var(--forest); }
+
+  .pullquote{
+    border-left:4px solid var(--gold);
+    padding:6px 0 6px 18px;
+    margin:18px 0;
+    font-style:italic;
+    color:#3a3a3a;
+  }
+
+  /* ===== THREAT GAUGE ===== */
+  .gauge-box{
+    margin-top:50px;
+    border:1px solid var(--line);
+    background:var(--paper-dark);
+    padding:26px 24px;
+    position:relative;
+  }
+  .gauge-box::before{
+    content:'CONFIDENTIEL — USAGE INTERNE';
+    position:absolute;
+    top:-10px;
+    left:20px;
+    background:var(--paper);
+    padding:0 8px;
+    font-family:'Courier New', monospace;
+    font-size:10px;
+    letter-spacing:0.1em;
+    color:var(--alert);
+  }
+  .gauge-title{
+    font-size:17px;
+    font-weight:bold;
+    color:var(--forest);
+    margin-bottom:4px;
+  }
+  .gauge-desc{
+    font-family:Helvetica, Arial, sans-serif;
+    font-size:13.5px;
+    color:#555;
+    margin-bottom:18px;
+  }
+  .gauge-track{
+    height:22px;
+    border:1px solid var(--ink);
+    background:repeating-linear-gradient(45deg, #e9e3d4 0 8px, #ddd5bf 8px 16px);
+    position:relative;
+    overflow:hidden;
+  }
+  .gauge-fill{
+    height:100%;
+    width:22%;
+    background:linear-gradient(90deg, var(--forest), var(--gold));
+    transition:width 0.5s ease;
+  }
+  .gauge-labels{
+    display:flex;
+    justify-content:space-between;
+    font-family:'Courier New', monospace;
+    font-size:10px;
+    color:#777;
+    margin-top:6px;
+    text-transform:uppercase;
+    letter-spacing:0.05em;
+  }
+  .gauge-readout{
+    font-family:'Courier New', monospace;
+    font-size:13px;
+    margin-top:14px;
+    color:var(--ink);
+    min-height:40px;
+  }
+  .gauge-readout .level{
+    font-weight:bold;
+    color:var(--alert);
+  }
+  .gauge-btn{
+    margin-top:16px;
+    font-family:Helvetica, Arial, sans-serif;
+    font-size:13px;
+    font-weight:bold;
+    letter-spacing:0.03em;
+    color:#fff;
+    background:var(--forest);
+    border:none;
+    padding:11px 20px;
+    cursor:pointer;
+    transition:background 0.2s, transform 0.1s;
+  }
+  .gauge-btn:hover{ background:var(--forest-light); }
+  .gauge-btn:active{ transform:scale(0.98); }
+  .gauge-btn:focus-visible{ outline:3px solid var(--gold); outline-offset:2px; }
+
+  /* ===== CASE FILES (animaux) ===== */
+  .casefiles{
+    margin-top:54px;
+  }
+  .casefiles h2{
+    font-size:clamp(20px, 3vw, 27px);
+    border-bottom:1px solid var(--line);
+    padding-bottom:10px;
+    margin-bottom:22px;
+  }
+  .case{
+    display:flex;
+    gap:16px;
+    padding:16px 0;
+    border-bottom:1px dashed var(--line);
+    align-items:flex-start;
+  }
+  .case:last-child{ border-bottom:none; }
+  .case-id{
+    font-family:'Courier New', monospace;
+    font-size:12px;
+    color:var(--gold);
+    font-weight:bold;
+    white-space:nowrap;
+    padding-top:2px;
+  }
+  .case-body p{
+    font-size:15.5px;
+    margin:0;
+  }
+  .case-body .case-title{
+    font-weight:bold;
+    color:var(--forest);
+  }
+  .stamp-ok{
+    font-family:'Courier New', monospace;
+    font-size:11px;
+    font-weight:bold;
+    color:var(--forest);
+    border:1.5px solid var(--forest);
+    padding:1px 6px;
+    transform:rotate(-3deg);
+    display:inline-block;
+    margin-left:6px;
+    white-space:nowrap;
+  }
+
+  /* ===== ARTICLE DE LOI ===== */
+  .articles{
+    margin-top:54px;
+    background:var(--paper-dark);
+    border:1px solid var(--line);
+    padding:26px 28px;
+  }
+  .articles h2{
+    font-size:19px;
+    color:var(--forest);
+    margin-bottom:16px;
+  }
+  .article-item{
+    font-size:15px;
+    margin-bottom:14px;
+    padding-left:20px;
+    position:relative;
+  }
+  .article-item .num{
+    position:absolute;
+    left:0;
+    font-family:'Courier New', monospace;
+    color:var(--gold);
+    font-weight:bold;
+    font-size:13px;
+  }
+
+  /* ===== SIGNATURE ===== */
+  .signature-block{
+    margin-top:60px;
+    text-align:right;
+    padding-right:10px;
+  }
+  .signature-block .place-date{
+    font-family:'Courier New', monospace;
+    font-size:12px;
+    color:#666;
+  }
+  .signature-block .title{
+    font-size:14px;
+    margin-top:18px;
+    color:#444;
+  }
+  .signature-block .sig{
+    font-family:'Brush Script MT', cursive;
+    font-size:34px;
+    color:var(--forest);
+    margin-top:6px;
+    transform:rotate(-2deg);
+  }
+
+  /* ===== FOOTER ===== */
+  footer{
+    max-width:920px;
+    margin:0 auto;
+    padding:30px 24px 50px;
+    border-top:1px solid var(--line);
+  }
+  .footer-legal{
+    font-family:'Courier New', monospace;
+    font-size:9.5px;
+    color:#9a9a9a;
+    line-height:1.7;
+    max-width:700px;
+  }
+  .footer-legal .reveal{
+    color:#9a9a9a;
+    cursor:help;
+    border-bottom:1px dotted #bbb;
+  }
+  .footer-legal .reveal:hover{
+    color:var(--alert);
+  }
+
+  /* ===== MINI-JEU : LE POING CONTRE LE MUR ===== */
+  .game-box{
+    margin-top:50px;
+    border:1px solid var(--line);
+    background:var(--paper-dark);
+    padding:26px 24px 30px;
+    position:relative;
+  }
+  .game-box::before{
+    content:'ÉPREUVE PRATIQUE — HOMOLOGUÉE';
+    position:absolute;
+    top:-10px;
+    left:20px;
+    background:var(--paper);
+    padding:0 8px;
+    font-family:'Courier New', monospace;
+    font-size:10px;
+    letter-spacing:0.1em;
+    color:var(--alert);
+  }
+  .game-title{
+    font-size:17px;
+    font-weight:bold;
+    color:var(--forest);
+    margin-bottom:4px;
+  }
+  .game-desc{
+    font-family:Helvetica, Arial, sans-serif;
+    font-size:13.5px;
+    color:#555;
+    margin-bottom:18px;
+  }
+
+  .game-stage{
+    position:relative;
+    width:100%;
+    height:210px;
+    background:linear-gradient(180deg, #d8e8e0 0%, #c9ddd1 65%, #b9c9a8 100%);
+    border:1px solid var(--ink);
+    overflow:hidden;
+    touch-action:manipulation;
+    user-select:none;
+    -webkit-user-select:none;
+  }
+
+  /* sol, pour ancrer la scène vue de profil */
+  .ground-line{
+    position:absolute;
+    left:0; right:0; bottom:0;
+    height:34px;
+    background:linear-gradient(180deg, #a9b890, #93a376);
+    border-top:2px solid #7d8d63;
+  }
+
+  /* le mur en coupe, occupant la partie droite de la scène */
+  .wall-wrap{
+    position:absolute;
+    right:6%;
+    bottom:34px;
+    width:46%;
+    max-width:230px;
+    top:14px;
+    transition: transform 0.18s ease;
+  }
+  .wall-wrap.wobble{ animation: wallWobble 0.22s ease; }
+  @keyframes wallWobble{
+    0%{ transform:translateX(0); }
+    30%{ transform:translateX(-4px) rotate(-0.6deg); }
+    60%{ transform:translateX(3px) rotate(0.4deg); }
+    100%{ transform:translateX(0); }
+  }
+  .wall-svg{
+    width:100%;
+    height:100%;
+    display:block;
+    filter:drop-shadow(2px 4px 3px rgba(0,0,0,0.18));
+  }
+  .wall-wrap.shattered .wall-svg{
+    opacity:0;
+    transition:opacity 0.15s ease;
+  }
+
+  /* morceaux qui s'envolent à l'éclatement final */
+  .wall-shard{
+    position:absolute;
+    background:#cdc1a4;
+    border:1px solid rgba(44,44,44,0.35);
+    opacity:0;
+    pointer-events:none;
+  }
+  .wall-shard.fly{
+    animation: shardFly 0.6s ease-out forwards;
+  }
+  @keyframes shardFly{
+    0%{ opacity:1; transform:translate(0,0) rotate(0deg); }
+    100%{ opacity:0; transform: translate(var(--dx), var(--dy)) rotate(var(--rot)); }
+  }
+
+  .wall-broken-msg{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    background:linear-gradient(135deg, var(--forest), var(--forest-light));
+    opacity:0;
+    transform:scale(0.85);
+    transition:opacity 0.4s ease, transform 0.4s cubic-bezier(.2,1.4,.4,1);
+    padding:14px;
+    z-index:8;
+    pointer-events:none;
+  }
+  .wall-broken-msg.show{ opacity:1; transform:scale(1); pointer-events:auto; }
+  .wall-broken-msg span{
+    font-family:'Brush Script MT', cursive, Georgia, serif;
+    font-style:italic;
+    color:#fff;
+    font-size:clamp(22px, 6vw, 34px);
+    line-height:1.3;
+  }
+
+  /* zone cible de tempo */
+  .tempo-track{
+    position:absolute;
+    left:14px;
+    right:14px;
+    bottom:6px;
+    height:10px;
+    background:rgba(44,44,44,0.18);
+    border:1px solid rgba(44,44,44,0.4);
+    z-index:4;
+  }
+  .tempo-zone{
+    position:absolute;
+    top:-1px;
+    bottom:-1px;
+    left:42%;
+    width:26%;
+    background:rgba(184,150,79,0.55);
+    border-left:2px solid var(--gold);
+    border-right:2px solid var(--gold);
+  }
+  .tempo-cursor{
+    position:absolute;
+    top:-3px;
+    bottom:-3px;
+    width:4px;
+    background:var(--alert);
+    left:0%;
+    box-shadow:0 0 6px rgba(139,46,46,0.6);
+  }
+
+  /* le poing, positionné à gauche, qui frappe vers le mur à droite */
+  .fist{
+    position:absolute;
+    font-size:44px;
+    left:18%;
+    top:54%;
+    transform:translate(-50%,-50%) rotate(0deg);
+    transition: transform 0.12s ease, left 0.12s ease, opacity 0.2s ease;
+    filter:drop-shadow(0 3px 2px rgba(0,0,0,0.25));
+    z-index:3;
+  }
+  .fist.punch{ transform:translate(-50%,-50%) scale(1.1) rotate(-4deg); left:34%; }
+  .fist.shatter{
+    animation: fistShatter 0.45s ease forwards;
+  }
+  @keyframes fistShatter{
+    0%{ transform:translate(-50%,-50%) scale(1.05) rotate(-2deg); left:24%; }
+    40%{ transform:translate(-50%,-50%) scale(0.7) rotate(40deg); left:10%; opacity:1; }
+    100%{ transform:translate(-50%,-50%) scale(0.3) rotate(130deg); left:0%; opacity:0; }
+  }
+  /* à la victoire, le poing s'efface pour laisser place au message */
+  .fist.victory{
+    opacity:0;
+    transform:translate(-50%,-50%) scale(0.6);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+
+  .game-readout{
+    font-family:'Courier New', monospace;
+    font-size:13px;
+    margin-top:14px;
+    color:var(--ink);
+    min-height:20px;
+  }
+  .game-readout .ok{ color:var(--forest); font-weight:bold; }
+  .game-readout .ko{ color:var(--alert); font-weight:bold; }
+
+  .game-hits{
+    display:flex;
+    gap:6px;
+    margin-top:10px;
+  }
+  .hit-pip{
+    width:18px;
+    height:18px;
+    border:1.5px solid var(--ink);
+    background:transparent;
+    transition:background 0.2s, border-color 0.2s;
+  }
+  .hit-pip.filled{ background:var(--forest); border-color:var(--forest); }
+
+  .game-btn{
+    margin-top:16px;
+    font-family:Helvetica, Arial, sans-serif;
+    font-size:13px;
+    font-weight:bold;
+    letter-spacing:0.03em;
+    color:#fff;
+    background:var(--alert);
+    border:none;
+    padding:11px 20px;
+    cursor:pointer;
+    transition:background 0.2s, transform 0.1s;
+  }
+  .game-btn:hover{ background:#a03737; }
+  .game-btn:active{ transform:scale(0.98); }
+  .game-btn:focus-visible{ outline:3px solid var(--gold); outline-offset:2px; }
+
+  /* flash de feedback plein cadre, succès ou échec */
+  .game-flash{
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    opacity:0;
+    z-index:5;
+  }
+  .game-flash.flash-ok{
+    background:rgba(46,125,79,0.38);
+    animation: flashPulse 0.45s ease-out forwards;
+  }
+  .game-flash.flash-ko{
+    background:rgba(139,46,46,0.42);
+    animation: flashPulse 0.45s ease-out forwards;
+  }
+  @keyframes flashPulse{
+    0%{ opacity:1; }
+    100%{ opacity:0; }
+  }
+
+  /* texte qui surgit et s'envole, type "+1" ou "Raté" */
+  .float-feedback{
+    position:absolute;
+    left:50%;
+    top:38%;
+    transform:translate(-50%,-50%);
+    pointer-events:none;
+    font-family:'Courier New', monospace;
+    font-weight:bold;
+    font-size:0;
+    white-space:nowrap;
+    z-index:6;
+  }
+  .float-feedback.pop-ok{
+    color:var(--forest);
+    font-size:26px;
+    animation: floatUp 0.7s ease-out forwards;
+  }
+  .float-feedback.pop-ko{
+    color:var(--alert);
+    font-size:22px;
+    animation: floatUp 0.7s ease-out forwards;
+  }
+  @keyframes floatUp{
+    0%{ opacity:0; transform:translate(-50%,-50%) scale(0.6); }
+    25%{ opacity:1; transform:translate(-50%,-90%) scale(1.15); }
+    100%{ opacity:0; transform:translate(-50%,-160%) scale(1); }
+  }
+
+  /* écran de victoire : léger effet de confettis simples en CSS */
+  .confetti{
+    position:absolute;
+    width:8px;
+    height:8px;
+    top:-10px;
+    opacity:0.9;
+    animation: confettiFall 1.1s ease-in forwards;
+  }
+  @keyframes confettiFall{
+    0%{ transform:translateY(0) rotate(0deg); opacity:1; }
+    100%{ transform:translateY(220px) rotate(360deg); opacity:0; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .fist, .fist.punch, .fist.shatter{ animation:none; transition:none; }
+    .wall-broken-msg{ transition:none; }
+    .game-flash, .float-feedback, .confetti{ animation:none !important; opacity:0 !important; }
+  }
+
+  /* ===== RESPONSIVE — MOBILE PORTRAIT ===== */
+  @media (max-width:600px){
+    header.letterhead{ padding:20px 16px 14px; }
+    .ref-block{ text-align:left; white-space:normal; margin-top:10px; font-size:10.5px; }
+    .letterhead-top{ flex-direction:column; }
+    .agency-name{ font-size:clamp(20px, 6vw, 26px); }
+    .agency-sub{ font-size:12px; }
+    .seal{ width:88px; height:88px; font-size:8px; }
+    .seal span{ padding:0 10px; }
+
+    main{ padding:8px 16px 50px; }
+    .bulletin{ margin-top:30px; }
+    .bulletin p{ font-size:15.5px; }
+    .pullquote{ padding-left:14px; }
+
+    .gauge-box, .game-box, .articles{ padding:20px 16px 24px; }
+    .gauge-box::before, .game-box::before{ font-size:9px; left:14px; }
+    .gauge-btn, .game-btn{ width:100%; }
+
+    .casefiles{ margin-top:40px; }
+    .case{ flex-direction:column; gap:4px; }
+    .case-id{ font-size:11px; }
+    .case-body p{ font-size:15px; }
+
+    .articles{ margin-top:40px; }
+
+    .signature-block{ text-align:left; margin-top:44px; }
+    .signature-block .sig{ font-size:28px; }
+
+    .game-stage{ height:170px; }
+    .fist{ font-size:38px; }
+
+    footer{ padding:24px 16px 40px; }
+  }
+
+  @media (max-width:380px){
+    .agency-name{ font-size:19px; }
+    .seal{ width:76px; height:76px; font-size:7px; transform:rotate(-8deg) scale(2); }
+    .game-stage{ height:155px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="letterhead">
+  <div class="letterhead-top">
+    <div>
+      <div class="republic-line">République Domestique — Foyer Indivis</div>
+      <div class="agency-name">Office National de<br>Protection des Murs</div>
+      <div class="agency-sub">« Un mur sauvé, c'est une jointure préservée »</div>
+    </div>
+    <div class="ref-block">
+      Réf. dossier : ONPM-MD-0001<br>
+      Objet : Mise en sécurité du bâti<br>
+      Date : ce jour, comme tous les jours
+    </div>
+  </div>
+  <div class="seal-wrap">
+    <div class="seal"><span>O.N.P.M. — Brigade Anti-Tête-de-Mule — Service Vérifié</span></div>
+  </div>
+</header>
+
+<main>
+
+  <section class="game-box">
+    <div class="game-title">Épreuve pratique — Casser le mur (sans se casser la main)</div>
+    <div class="game-desc">Tapez sur le poing quand le curseur traverse la zone verte. Au bon tempo, trois fois de suite : le mur cède. Une marge confortable est tolérée.</div>
+
+    <div class="game-stage" id="gameStage">
+      <div class="ground-line"></div>
+
+      <div class="wall-wrap" id="wallWrap">
+        <svg class="wall-svg" id="wallSvg" viewBox="0 0 100 80" preserveAspectRatio="none">
+          <!-- corps du mur, vu en coupe : empilement de briques avec un léger dégradé de profondeur -->
+          <defs>
+            <linearGradient id="brickGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#d6c9a8"/>
+              <stop offset="100%" stop-color="#b8a87f"/>
+            </linearGradient>
+          </defs>
+          <rect x="0" y="0" width="100" height="80" fill="url(#brickGrad)"/>
+          <!-- joints de briques, en quinconce, pour suggérer l'épaisseur du mur -->
+          <g stroke="#8d7d57" stroke-width="0.8" opacity="0.55">
+            <line x1="0" y1="13" x2="100" y2="13"/>
+            <line x1="0" y1="26" x2="100" y2="26"/>
+            <line x1="0" y1="39" x2="100" y2="39"/>
+            <line x1="0" y1="52" x2="100" y2="52"/>
+            <line x1="0" y1="65" x2="100" y2="65"/>
+            <line x1="20" y1="0" x2="20" y2="13"/>
+            <line x1="60" y1="0" x2="60" y2="13"/>
+            <line x1="0" y1="13" x2="0" y2="26"/>
+            <line x1="40" y1="13" x2="40" y2="26"/>
+            <line x1="80" y1="13" x2="80" y2="26"/>
+            <line x1="20" y1="26" x2="20" y2="39"/>
+            <line x1="60" y1="26" x2="60" y2="39"/>
+            <line x1="0" y1="39" x2="0" y2="52"/>
+            <line x1="40" y1="39" x2="40" y2="52"/>
+            <line x1="80" y1="39" x2="80" y2="52"/>
+            <line x1="20" y1="52" x2="20" y2="65"/>
+            <line x1="60" y1="52" x2="60" y2="65"/>
+            <line x1="0" y1="65" x2="0" y2="80"/>
+            <line x1="40" y1="65" x2="40" y2="80"/>
+            <line x1="80" y1="65" x2="80" y2="80"/>
+          </g>
+          <!-- tranche / profil du mur sur le bord gauche, pour bien lire "vu de côté" -->
+          <rect x="0" y="0" width="6" height="80" fill="#a4936b"/>
+          <rect x="0" y="0" width="6" height="80" fill="#000" opacity="0.08"/>
+          <!-- groupe des fissures, peuplé dynamiquement par coup réussi -->
+          <g id="cracksGroup" stroke="#3a2f1d" stroke-width="0" fill="none" stroke-linecap="round"></g>
+        </svg>
+      </div>
+
+      <div class="game-flash" id="gameFlash"></div>
+      <div class="wall-broken-msg" id="wallBrokenMsg"><span>Je t'aimerais toujours.</span></div>
+      <div class="fist" id="fist">👊</div>
+      <div class="float-feedback" id="floatFeedback"></div>
+      <div class="tempo-track">
+        <div class="tempo-zone" id="tempoZone"></div>
+        <div class="tempo-cursor" id="tempoCursor"></div>
+      </div>
+    </div>
+
+    <div class="game-readout" id="gameReadout">Prêt(e) ? Lancez l'épreuve.</div>
+    <div class="game-hits" id="gameHits">
+      <div class="hit-pip"></div>
+      <div class="hit-pip"></div>
+      <div class="hit-pip"></div>
+    </div>
+    <button class="game-btn" id="gameBtn">Lancer l'épreuve</button>
+  </section>
+
+  <section class="bulletin">
+    <span class="bulletin-tag">Communiqué officiel n°1</span>
+    <h2>Avis de constat : un mur a été agressé</h2>
+    <p>Les faits sont établis et ne sont plus contestés : à <strong>deux reprises</strong>, un mur innocent — qui ne demandait rien à personne, qui tenait juste le plafond — a été pris pour cible par une main désormais classée <strong>« arme de dépit » de catégorie B</strong>.</p>
+    <p>L'enquête a permis d'identifier la cause profonde de l'incident. Il ne s'agit ni d'un défaut de construction, ni d'un vice du mur. Il s'agit d'un phénomène bien documenté en sciences du couple : <strong>la têtitude de Ma Douce</strong>, une force connue pour rester droite dans ses bottes même quand le mur, lui, ne demande qu'à rester droit tout court.</p>
+    <p class="pullquote">« Le mur n'avait pas tort. Le mur n'avait juste pas la même opinion. C'est apparemment suffisant. »<br>— extrait du rapport d'expertise, page 1</p>
+    <p>L'Office tient à préciser qu'aucune charge n'est retenue contre Ma Douce. Au contraire : son entêtement est aujourd'hui reconnu comme une <strong>caractéristique protégée</strong>, au même titre que sa capacité bien plus officielle à recueillir tout ce qui a quatre pattes, des plumes, ou un besoin urgent d'être sauvé.</p>
+  </section>
+
+  <section class="gauge-box">
+    <div class="gauge-title">Jauge officielle — Niveau de menace murale</div>
+    <div class="gauge-desc">Mesure en temps réel du risque encouru par les murs du foyer en cas de désaccord avec Ma Douce.</div>
+    <div class="gauge-track">
+      <div class="gauge-fill" id="gaugeFill"></div>
+    </div>
+    <div class="gauge-labels">
+      <span>Calme plat</span>
+      <span>Vigilance</span>
+      <span>Mur en danger</span>
+    </div>
+    <div class="gauge-readout" id="gaugeReadout">Niveau actuel : <span class="level">22 % — tranquille, le mur respire.</span></div>
+    <button class="gauge-btn" id="gaugeBtn">Déclarer « elle a encore raison »</button>
+  </section>
+
+  <section class="casefiles">
+    <h2>Registre des sauvetages — Service Animalier de Ma Douce</h2>
+
+    <div class="case">
+      <div class="case-id mono">DOSSIER<br>#0001</div>
+      <div class="case-body">
+        <p><span class="case-title">Créature non identifiée trouvée dans un état critique de « avoir l'air triste ».</span> Prise en charge immédiate, sans demande d'autorisation administrative, ni au mur, ni à personne. <span class="stamp-ok">SAUVÉ ✓</span></p>
+      </div>
+    </div>
+
+    <div class="case">
+      <div class="case-id mono">DOSSIER<br>#0002</div>
+      <div class="case-body">
+        <p><span class="case-title">Animal jugé « pas si moche en fait ».</span> Adoption prononcée sur le champ, recours impossible, le dossier du mur d'à côté est resté sans suite. <span class="stamp-ok">SAUVÉ ✓</span></p>
+      </div>
+    </div>
+
+    <div class="case">
+      <div class="case-id mono">DOSSIER<br>#0003</div>
+      <div class="case-body">
+        <p><span class="case-title">Cas du conjoint, classé « espèce à protéger » par mesure d'équité.</span> Statut : recueilli, nourri, supporté avec une patience qui devrait, elle aussi, recevoir une médaille. <span class="stamp-ok">SAUVÉ ✓</span></p>
+      </div>
+    </div>
+
+  </section>
+
+  <section class="articles">
+    <h2>Texte de référence — Charte du Foyer</h2>
+    <div class="article-item"><span class="num">Art. 1</span> — Tout désaccord avec Ma Douce doit d'abord être vérifié : a-t-elle raison ? (Statistiquement : oui.)</div>
+    <div class="article-item"><span class="num">Art. 2</span> — En cas de frustration, le mur n'est pas une option. Les options validées sont : respirer, sortir, ou perdre poliment.</div>
+    <div class="article-item"><span class="num">Art. 3</span> — Tout animal en détresse aperçu par Ma Douce devient, dans les secondes qui suivent, un membre du foyer. Aucune négociation possible, l'Office a renoncé à essayer.</div>
+    <div class="article-item"><span class="num">Art. 4</span> — La têtitude susmentionnée est, après vérification, indissociable de tout ce qui rend Ma Douce irremplaçable. L'Office ne demande donc plus son retrait.</div>
+  </section>
+
+  <div class="signature-block">
+    <div class="place-date">Fait au domicile, le jour de toujours</div>
+    <div class="title">Pour l'Office National de Protection des Murs,<br>le Directeur (et mari soumis aux faits)</div>
+    <div class="sig">Ton mari</div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="footer-legal">
+    MENTIONS LÉGALES — Ce document n'a aucune valeur administrative, ce qui ne l'empêche pas d'être sincère. L'Office National de Protection des Murs décline toute responsabilité concernant les dégâts déjà causés, considérés comme amortis. Reproduction autorisée, câlins <span class="reveal" title="je t'aime, Ma Douce">recommandés</span>.
+  </div>
+</footer>
+
+<script>
+(function(){
+  const fill = document.getElementById('gaugeFill');
+  const readout = document.getElementById('gaugeReadout');
+  const btn = document.getElementById('gaugeBtn');
+
+  const messages = [
+    { pct: 22, text: "tranquille, le mur respire." },
+    { pct: 41, text: "léger désaccord en cours, le mur garde un œil ouvert." },
+    { pct: 63, text: "tension palpable, le mur révise son assurance." },
+    { pct: 84, text: "alerte orange, le mur a déjà prévenu le plâtrier." },
+    { pct: 97, text: "elle avait raison depuis le début, le mur peut se détendre." }
+  ];
+  let i = 0;
+
+  function render(){
+    const m = messages[i % messages.length];
+    fill.style.width = m.pct + "%";
+    readout.innerHTML = 'Niveau actuel : <span class="level">' + m.pct + ' % — ' + m.text + '</span>';
+  }
+
+  btn.addEventListener('click', function(){
+    i++;
+    render();
+    if (i % messages.length === messages.length - 1){
+      btn.textContent = "Confirmer qu'elle avait raison depuis le début";
+    } else {
+      btn.textContent = "Déclarer « elle a encore raison »";
+    }
+  });
+
+  render();
+})();
+
+/* ===== MINI-JEU : LE POING CONTRE LE MUR ===== */
+(function(){
+  const stage = document.getElementById('gameStage');
+  const cursor = document.getElementById('tempoCursor');
+  const zone = document.getElementById('tempoZone');
+  const fist = document.getElementById('fist');
+  const readout = document.getElementById('gameReadout');
+  const hitsWrap = document.getElementById('gameHits');
+  const pips = hitsWrap.querySelectorAll('.hit-pip');
+  const btn = document.getElementById('gameBtn');
+  const wallWrap = document.getElementById('wallWrap');
+  const wallSvg = document.getElementById('wallSvg');
+  const cracksGroup = document.getElementById('cracksGroup');
+  const brokenMsg = document.getElementById('wallBrokenMsg');
+  const flash = document.getElementById('gameFlash');
+  const floatFb = document.getElementById('floatFeedback');
+
+  let running = false;
+  let pos = 0;          // 0 -> 100, position du curseur sur le rail
+  let dir = 1;          // sens de balayage
+  let speed = 0.62;     // % par frame — rythme posé, lisible
+  let hits = 0;
+  let rafId = null;
+  let lastTs = null;
+  let zoneStart = 37;   // % - position de la zone cible (variera un peu à chaque manche)
+  let zoneWidth = 26;   // % - large marge de tolérance
+  let locked = false;   // anti double-clic pendant une animation de résultat
+
+  const NEEDED_HITS = 3; // 3 coups réussis suffisent à faire céder le mur
+
+  // chaque coup réussi dessine une fissure de plus en plus profonde, en partant
+  // du point d'impact (bord gauche du mur, où frappe le poing) vers l'intérieur.
+  const CRACK_PATHS = [
+    "M6,40 L22,34 L30,46 L42,38",
+    "M6,40 L18,52 L34,58 L48,50 M30,46 L36,30",
+    "M6,40 L14,20 L26,16 L40,22 M42,38 L52,44 L62,36 M34,58 L44,68 L58,64"
+  ];
+
+  // léger son de feedback, généré à la volée (pas de fichier audio nécessaire)
+  let audioCtx = null;
+  function beep(freq, duration, type){
+    try{
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = type || 'sine';
+      osc.frequency.value = freq;
+      gain.gain.value = 0.08;
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+      osc.stop(audioCtx.currentTime + duration);
+    } catch(e){ /* audio non disponible, on ignore silencieusement */ }
+  }
+
+  function setZoneRandom(){
+    // la zone cible se déplace un peu à chaque manche pour éviter le par-cœur,
+    // tout en restant dans une plage confortable (jamais collée aux bords)
+    zoneStart = 25 + Math.random() * 35; // entre 25% et 60%
+    zone.style.left = zoneStart + '%';
+    zone.style.width = zoneWidth + '%';
+  }
+
+  function fillPips(n){
+    pips.forEach((p, i) => {
+      if (i < n) p.classList.add('filled');
+      else p.classList.remove('filled');
+    });
+  }
+
+  function flashScreen(kind){
+    flash.classList.remove('flash-ok', 'flash-ko');
+    void flash.offsetWidth;
+    flash.classList.add(kind === 'ok' ? 'flash-ok' : 'flash-ko');
+  }
+
+  function popFeedback(text, kind){
+    floatFb.textContent = text;
+    floatFb.classList.remove('pop-ok', 'pop-ko');
+    void floatFb.offsetWidth;
+    floatFb.classList.add(kind === 'ok' ? 'pop-ok' : 'pop-ko');
+  }
+
+  function clearCracks(){
+    cracksGroup.innerHTML = '';
+  }
+
+  function addCrack(stepIndex){
+    // ajoute le chemin de fissure correspondant à ce coup, sans effacer les précédents
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', CRACK_PATHS[Math.min(stepIndex, CRACK_PATHS.length - 1)]);
+    path.setAttribute('stroke', '#3a2f1d');
+    path.setAttribute('stroke-width', '1.6');
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke-linecap', 'round');
+    path.setAttribute('opacity', '0');
+    cracksGroup.appendChild(path);
+
+    // petite animation de tracé : la fissure se dessine, pas juste apparaît
+    const length = path.getTotalLength();
+    path.style.strokeDasharray = length;
+    path.style.strokeDashoffset = length;
+    path.style.transition = 'stroke-dashoffset 0.35s ease-out, opacity 0.1s ease-out';
+    requestAnimationFrame(() => {
+      path.style.opacity = '1';
+      path.style.strokeDashoffset = '0';
+    });
+  }
+
+  function wobbleWall(){
+    wallWrap.classList.remove('wobble');
+    void wallWrap.offsetWidth;
+    wallWrap.classList.add('wobble');
+  }
+
+  function shatterWall(){
+    // remplace le mur par une volée de petits fragments qui s'envolent,
+    // puis masque le SVG d'origine
+    const rect = wallWrap.getBoundingClientRect();
+    const stageRect = stage.getBoundingClientRect();
+    const cols = 5, rows = 4;
+    const w = rect.width / cols, h = rect.height / rows;
+    const baseLeft = rect.left - stageRect.left;
+    const baseTop = rect.top - stageRect.top;
+
+    for (let r = 0; r < rows; r++){
+      for (let c = 0; c < cols; c++){
+        const shard = document.createElement('div');
+        shard.className = 'wall-shard';
+        shard.style.left = (baseLeft + c * w) + 'px';
+        shard.style.top = (baseTop + r * h) + 'px';
+        shard.style.width = w + 'px';
+        shard.style.height = h + 'px';
+        const dx = (c - cols/2) * (18 + Math.random() * 24);
+        const dy = (r - rows/2) * (14 + Math.random() * 20) - 20;
+        const rot = (Math.random() * 160 - 80);
+        shard.style.setProperty('--dx', dx + 'px');
+        shard.style.setProperty('--dy', dy + 'px');
+        shard.style.setProperty('--rot', rot + 'deg');
+        stage.appendChild(shard);
+        requestAnimationFrame(() => shard.classList.add('fly'));
+        setTimeout(() => shard.remove(), 700);
+      }
+    }
+    wallWrap.classList.add('shattered');
+  }
+
+  function spawnConfetti(){
+    const colors = ['#1B3A2B', '#B8964F', '#F3EFE6', '#2C5240'];
+    for (let i = 0; i < 18; i++){
+      const c = document.createElement('div');
+      c.className = 'confetti';
+      c.style.left = (10 + Math.random() * 80) + '%';
+      c.style.background = colors[i % colors.length];
+      c.style.animationDelay = (Math.random() * 0.25) + 's';
+      c.style.transform = 'rotate(' + (Math.random()*360) + 'deg)';
+      stage.appendChild(c);
+      setTimeout(() => c.remove(), 1500);
+    }
+  }
+
+  function loop(ts){
+    if (!running) return;
+    if (lastTs === null) lastTs = ts;
+    const dt = (ts - lastTs) / 16.67; // normalisé ~ frames à 60fps
+    lastTs = ts;
+
+    pos += dir * speed * dt;
+    if (pos >= 100){ pos = 100; dir = -1; }
+    if (pos <= 0){ pos = 0; dir = 1; }
+
+    cursor.style.left = pos + '%';
+    rafId = requestAnimationFrame(loop);
+  }
+
+  function startRound(){
+    if (rafId) cancelAnimationFrame(rafId); // sécurité anti double-boucle
+    hits = 0;
+    speed = 0.62;
+    fillPips(0);
+    pos = 0;
+    dir = 1;
+    lastTs = null;
+    running = true;
+    locked = false;
+    setZoneRandom();
+    clearCracks();
+    brokenMsg.classList.remove('show');
+    wallWrap.classList.remove('shattered', 'wobble');
+    wallWrap.style.opacity = '1';
+    fist.classList.remove('shatter', 'victory');
+    fist.style.left = '18%';
+    fist.style.opacity = '1';
+    readout.innerHTML = 'En rythme... tapez quand le curseur est dans la zone verte.';
+    btn.textContent = 'Recommencer';
+    rafId = requestAnimationFrame(loop);
+  }
+
+  function stopRound(){
+    running = false;
+    if (rafId) cancelAnimationFrame(rafId);
+  }
+
+  function inZone(){
+    return pos >= zoneStart && pos <= (zoneStart + zoneWidth);
+  }
+
+  function punchSuccess(){
+    fillPips(hits + 1);
+    fist.classList.remove('punch');
+    void fist.offsetWidth; // restart anim
+    fist.classList.add('punch');
+    setTimeout(() => fist.classList.remove('punch'), 150);
+
+    flashScreen('ok');
+    wobbleWall();
+    addCrack(hits); // fissure correspondant à ce coup (avant incrément, donc 0,1,2...)
+    beep(520 + hits * 60, 0.18, 'triangle');
+
+    hits++;
+    const remaining = NEEDED_HITS - hits;
+
+    if (hits >= NEEDED_HITS){
+      popFeedback('Le mur cède !', 'ok');
+      stopRound();
+      locked = true;
+      readout.innerHTML = '<span class="ok">Tempo respecté à chaque coup — le mur cède enfin.</span>';
+      // le poing s'efface AVANT l'apparition du message, pour ne jamais le masquer
+      setTimeout(() => {
+        fist.classList.add('victory');
+        shatterWall();
+        beep(660, 0.12, 'triangle');
+        setTimeout(() => beep(880, 0.22, 'triangle'), 130);
+      }, 180);
+      setTimeout(() => {
+        brokenMsg.classList.add('show');
+        spawnConfetti();
+      }, 420);
+      btn.textContent = 'Encore une fois';
+    } else {
+      popFeedback('Bien joué !', 'ok');
+      readout.innerHTML = '<span class="ok">Bien frappé !</span> Encore ' + remaining + ' coup' + (remaining>1?'s':'') + ' au bon tempo.';
+      // la cadence reste douce, légère variation pour garder du rythme sans punir
+      speed += 0.04;
+      setZoneRandom();
+    }
+  }
+
+  function punchFail(reason){
+    stopRound();
+    locked = true;
+    fist.classList.add('shatter');
+    flashScreen('ko');
+    wobbleWall();
+    popFeedback('Raté !', 'ko');
+    beep(160, 0.3, 'sawtooth');
+    readout.innerHTML = '<span class="ko">Aïe — ' + reason + '</span> Le poing a morflé, pas le mur. On retente, le tempo est plus simple cette fois.';
+    btn.textContent = "Retenter l'épreuve";
+  }
+
+  function attemptPunch(){
+    if (!running || locked) return;
+    if (inZone()){
+      punchSuccess();
+    } else {
+      const reason = pos < zoneStart ? 'trop tôt, hors tempo.' : 'trop tard, hors tempo.';
+      punchFail(reason);
+    }
+  }
+
+  btn.addEventListener('click', function(){
+    startRound();
+  });
+
+  // le poing et la scène sont tous deux des zones de frappe.
+  // on gère soit le touch, soit le click, jamais les deux (anti double-comptage mobile).
+  let usingTouch = false;
+
+  function onPress(e){
+    if (e.type === 'touchstart'){
+      usingTouch = true;
+      e.preventDefault();
+      attemptPunch();
+    } else { // click
+      if (usingTouch) return; // ignorer le click fantôme généré après un touch
+      attemptPunch();
+    }
+  }
+
+  fist.addEventListener('touchstart', onPress, { passive:false });
+  fist.addEventListener('click', onPress);
+  stage.addEventListener('touchstart', onPress, { passive:false });
+  stage.addEventListener('click', onPress);
+
+  // barre espace au clavier, accessibilité
+  document.addEventListener('keydown', function(e){
+    if (e.code === 'Space' && running){
+      e.preventDefault();
+      attemptPunch();
+    }
+  });
+
+  setZoneRandom();
+})();
+</script>
+
+</body>
+</html>
